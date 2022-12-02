@@ -1,0 +1,12 @@
+library(rvest) 
+library(dplyr)
+library(robotstxt)
+path = paths_allowed ("https://www.the-numbers.com/box-office-star-records/worldwide/lifetime-acting/top-grossing-leading-stars")
+link <-"https://www.the-numbers.com/box-office-star-records/worldwide/lifetime-acting/top-grossing-leading-stars"
+web <- read_html (link)
+name <- web %>% html_nodes ("#page_filling_chart b a")%>% html_text()
+View (name)
+movies<- web %>% html_nodes("td:nth-child(4)") %>% html_text()
+View (movies)
+actor.ranking <- data.frame(name,movies)
+write.csv (actor.ranking, "actors ranking.csv")
